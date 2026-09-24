@@ -1,0 +1,14 @@
+{
+  "name": "ocr-vision",
+  "private": true,
+  "description": "Dev dependencies for the content pipeline (headless Chromium slide rendering) and Markdown linting.",
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "markdownlint-cli2": "0.23.3"
+  },
+  "scripts": {
+    "slides": "node content/youtube/render-slides.mjs",
+    "markdownlint": "markdownlint-cli2 \"**/*.md\"",
+    "markdownlint:fix": "markdownlint-cli2 --fix \"**/*.md\""
+  }
+}
