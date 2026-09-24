@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Tu Mac ya tiene un motor OCR.",
+    "narration": "macOS incluye desde 2019 un motor OCR de alta calidad: el framework Vision. Casi nadie lo usa desde la línea de comandos. Esta herramienta es la CLI que faltaba: ciento treinta y cuatro líneas de Swift, cero dependencias, sin red, sin claves de API."
+  },
+  "architecture": {
+    "title": "Una petición, una tubería.",
+    "narration": "La imagen se carga con AppKit, se convierte en CGImage y se entrega a una petición de Vision. El reconocimiento es una sola llamada a la API con tres propiedades: el nivel de reconocimiento, el interruptor de corrección de idioma y la lista ordenada de idiomas."
+  },
+  "reading-order": {
+    "title": "Orden de lectura, reconstruido.",
+    "narration": "Vision no dice nada sobre el orden del texto que devuelve. Así que la herramienta ordena las observaciones por punto medio vertical, agrupa los fragmentos de una misma línea y ordena cada línea de izquierda a derecha. Una constante empírica — sesenta por ciento — hace el trabajo."
+  },
+  "languages": {
+    "title": "Más de treinta idiomas, una bandera.",
+    "narration": "La lista de idiomas es una preferencia ordenada: Vision intenta primero el primer idioma y luego el siguiente. Pon el idioma dominante primero y pasa cualquier combinación en una sola bandera: inglés, hindi, árabe, alemán."
+  },
+  "flags": {
+    "title": "Rápido, crudo, o ambos.",
+    "narration": "Dos interruptores lo cambian todo. Rápido cambia precisión por latencia en pasadas masivas. Crudo desactiva la corrección de idioma, porque corregir el nombre de una variable a una palabra inglesa es perder datos. La bandera de salida escribe en un archivo en vez de stdout."
+  },
+  "privacy": {
+    "title": "Nada sale de la máquina.",
+    "narration": "El sistema operativo abre la imagen, un framework del sistema la reconoce y el resultado se imprime en stdout. Sin cuenta, sin clave, sin subida, sin coste por página. Para una captura de un sistema en producción, esa propiedad es el objetivo."
+  },
+  "wrapper": {
+    "title": "Se compila solo en la primera ejecución.",
+    "narration": "Un archivo Swift cuya compilación hay que recordar no es una herramienta. El envoltorio de treinta líneas compila la fuente una vez, guarda el binario en caché, recompila cuando la fuente cambia y pasa cada argumento sin tocarlo."
+  },
+  "code": {
+    "title": "Todo el motor: 134 líneas.",
+    "narration": "Análisis de argumentos, carga de la imagen, la petición de Vision, reconstrucción del orden de lectura y salida: todo en un archivo de ciento treinta y cuatro líneas, documentado línea a línea en el explicador del repositorio."
+  },
+  "testing": {
+    "title": "Pruébalo con un fixture generado.",
+    "narration": "La prueba de humo genera su propia imagen de prueba en vez de incluir una, ejecuta el envoltorio real —incluida la compilación— y compara el texto reconocido con las líneas esperadas. La misma prueba verifica los contratos de la CLI; todo corre en CI sobre un runner de macOS."
+  },
+  "tradeoffs": {
+    "title": "Los compromisos, con honestidad.",
+    "narration": "Es solo para macOS por diseño. El orden de lectura asume líneas horizontales. No hay preprocesado, así que los escaneos degradados siguen siendo difíciles. Las API en la nube aún ganan en los documentos más duros. Y la salida es texto plano, no cajas ni confianzas. Cada limitación está escrita."
+  },
+  "results": {
+    "title": "Lo que suma.",
+    "narration": "Ciento treinta y cuatro líneas de Swift, un envoltorio de treinta, cero dependencias, más de treinta idiomas y una prueba de extremo a extremo que demuestra la tubería. El resultado es la herramienta que ibas a construir: construida y documentada."
+  },
+  "outro": {
+    "title": "Roba la lista de verificación.",
+    "narration": "El código, la documentación de arquitectura, el explicador línea a línea y los compromisos son públicos bajo licencia MIT. Enlace en la descripción."
+  }
+}

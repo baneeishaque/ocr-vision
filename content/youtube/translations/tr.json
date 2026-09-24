@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Mac'inizde zaten bir OCR motoru var.",
+    "narration": "macOS 2019'dan beri yüksek kaliteli bir OCR motoru sunuyor: Vision çerçevesi. Neredeyse kimse onu komut satırından kullanmıyor. Bu araç eksik olan CLI: yüz otuz dört satır Swift, sıfır bağımlılık, ağ yok, API anahtarı yok."
+  },
+  "architecture": {
+    "title": "Tek istek, tek işlem hattı.",
+    "narration": "Görüntü AppKit ile yüklenir, CGImage'e dönüştürülür ve tek bir Vision isteğine verilir. Tanımanın kendisi üç özellikli tek bir API çağrısıdır: tanıma düzeyi, dil düzeltme anahtarı ve sıralı dil listesi."
+  },
+  "reading-order": {
+    "title": "Okuma sırası, yeniden kuruldu.",
+    "narration": "Vision döndürdüğü metnin sırası hakkında hiçbir şey söylemez. Bu yüzden araç gözlemleri dikey orta noktaya göre sıralar, aynı satırdaki parçaları gruplar ve her satırı soldan sağa sıralar. Tek bir deneysel sabit — yüzde altmış — işi yapar."
+  },
+  "languages": {
+    "title": "Otuzdan fazla dil, tek bayrak.",
+    "narration": "Dil listesi sıralı bir tercihtir: Vision önce ilk dili, sonra sıradakini dener. Baskın dili başa koyun ve herhangi bir kombinasyonu tek bayrakla geçin — İngilizce, Hintçe, Arapça, Almanca."
+  },
+  "flags": {
+    "title": "Hızlı, ham veya ikisi.",
+    "narration": "İki anahtar her şeyi değiştirir. Hızlı, toplu işlerde gecikme için doğruluktan feragat eder. Ham, dil düzeltmeyi kapatır; çünkü bir değişken adını İngilizce kelimeye düzeltmek veri kaybıdır. Çıktı bayrağı stdout yerine dosyaya yazar."
+  },
+  "privacy": {
+    "title": "Hiçbir şey makineden çıkmaz.",
+    "narration": "Görüntüyü işletim sistemi açar, işletim sistemi çerçevesi tanır ve sonuç stdout'a yazılır. Hesap yok, anahtar yok, yükleme yok, sayfa başına ücret yok. Üretim sisteminin ekran görüntüsü için asıl mesele bu özelliktir."
+  },
+  "wrapper": {
+    "title": "İlk çalıştırmada kendini derler.",
+    "narration": "Nasıl derleneceğini hatırlamak zorunda olduğunuz bir Swift dosyası araç değildir. Otuz satırlık kabuk sarmalayıcı kaynağı bir kez derler, ikiliyi önbelleğe alır, kaynak değişince yeniden derler ve her argümanı olduğu gibi iletir."
+  },
+  "code": {
+    "title": "Tüm motor: 134 satır.",
+    "narration": "Argüman ayrıştırma, görüntü yükleme, Vision isteği, okuma sırasını yeniden kurma ve çıktı — hepsi yüz otuz dört satırlık tek bir dosyada; depodaki açıklamada satır satır belgelenmiş."
+  },
+  "testing": {
+    "title": "Üretilen fixture ile kanıtla.",
+    "narration": "Duman testi test görüntüsünü depoya koymak yerine kendisi üretir, gerçek sarmalayıcıyı — derleme yolu dahil — çalıştırır ve tanınan metni beklenen satırlarla karşılaştırır. Aynı test CLI sözleşmelerini de doğrular; hepsi macOS CI çalıştırıcısında koşar."
+  },
+  "tradeoffs": {
+    "title": "Ödünleşimler, dürüstçe.",
+    "narration": "Tasarım gereği yalnızca macOS. Okuma sırası yatay satırlar varsayar. Ön işleme yok, bu yüzden bozuk taramalar zor kalır. Bulut API'leri en zor belgelerde hâlâ önde. Çıktı düz metin; kutular ve güven puanları değil. Her sınırlama yazılı."
+  },
+  "results": {
+    "title": "Toplamda.",
+    "narration": "Yüz otuz dört satır Swift, otuz satırlık sarmalayıcı, sıfır bağımlılık, otuzdan fazla dil ve işlem hattını kanıtlayan uçtan uca bir test. Sonuç, tam da kuracağınız araç — kurulmuş ve belgelenmiş."
+  },
+  "outro": {
+    "title": "Kontrol listesini alın.",
+    "narration": "Kod, mimari belgeleri, satır satır açıklama ve ödünleşimler MIT lisansıyla açık. Bağlantı açıklamada."
+  }
+}

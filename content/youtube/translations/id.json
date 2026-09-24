@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Mac Anda sudah punya mesin OCR.",
+    "narration": "macOS menyertakan mesin OCR berkualitas sejak 2019 — framework Vision. Hampir tidak ada yang memakainya dari baris perintah. Alat ini adalah CLI yang hilang: seratus tiga puluh empat baris Swift, tanpa dependensi, tanpa jaringan, tanpa kunci API."
+  },
+  "architecture": {
+    "title": "Satu permintaan, satu pipeline.",
+    "narration": "Gambar dimuat lewat AppKit, dikonversi ke CGImage, dan diserahkan ke satu permintaan Vision. Pengenalan itu sendiri adalah satu panggilan API dengan tiga properti: tingkat pengenalan, sakelar koreksi bahasa, dan daftar bahasa yang terurut."
+  },
+  "reading-order": {
+    "title": "Urutan baca, direkonstruksi.",
+    "narration": "Vision tidak menjamin urutan teks yang dikembalikan. Jadi alat ini mengurutkan observasi berdasarkan titik tengah vertikal, menggabungkan fragmen dalam satu baris, dan mengurutkan tiap baris dari kiri ke kanan. Satu konstanta empiris — enam puluh persen — melakukan pekerjaannya."
+  },
+  "languages": {
+    "title": "Lebih dari tiga puluh bahasa, satu flag.",
+    "narration": "Daftar bahasa adalah preferensi terurut: Vision mencoba bahasa pertama, lalu berikutnya. Taruh bahasa dominan di depan dan kirim kombinasi apa pun dalam satu flag — Inggris, Hindi, Arab, Jerman."
+  },
+  "flags": {
+    "title": "Cepat, mentah, atau keduanya.",
+    "narration": "Dua sakelar mengubah segalanya. Cepat menukar akurasi dengan latensi untuk pemrosesan massal. Mentah menonaktifkan koreksi bahasa, karena mengoreksi nama variabel menjadi kata Inggris adalah kehilangan data. Flag keluaran menulis ke berkas alih-alih stdout."
+  },
+  "privacy": {
+    "title": "Tidak ada yang keluar dari mesin.",
+    "narration": "Sistem operasi membuka gambar, framework sistem mengenalinya, dan hasilnya dicetak ke stdout. Tanpa akun, tanpa kunci, tanpa unggahan, tanpa biaya per halaman. Untuk tangkapan layar sistem produksi, sifat itulah intinya."
+  },
+  "wrapper": {
+    "title": "Mengompilasi dirinya saat pertama dijalankan.",
+    "narration": "Berkas Swift yang cara mengompilasinya harus diingat bukanlah alat. Pembungkus shell tiga puluh baris mengompilasi sumber sekali, menyimpan biner di cache, mengompilasi ulang saat sumber berubah, dan meneruskan setiap argumen apa adanya."
+  },
+  "code": {
+    "title": "Seluruh mesin: 134 baris.",
+    "narration": "Parsing argumen, pemuatan gambar, permintaan Vision, rekonstruksi urutan baca, dan keluaran — semuanya dalam satu berkas seratus tiga puluh empat baris, didokumentasikan baris demi baris di penjelas repositori."
+  },
+  "testing": {
+    "title": "Buktikan dengan fixture yang dihasilkan.",
+    "narration": "Uji asap membuat sendiri gambar ujinya alih-alih menyimpannya di repo, menjalankan pembungkus asli — termasuk jalur kompilasi — dan membandingkan teks yang dikenali dengan baris yang diharapkan. Uji yang sama memeriksa kontrak CLI; semuanya berjalan di CI pada runner macOS."
+  },
+  "tradeoffs": {
+    "title": "Komprominya, dengan jujur.",
+    "narration": "Hanya untuk macOS, memang. Urutan baca mengasumsikan baris horizontal. Tidak ada prapemrosesan, jadi pemindaian buruk tetap sulit. API cloud masih unggul pada dokumen tersulit. Dan keluarannya teks biasa, bukan kotak dan skor keyakinan. Setiap batasan tertulis."
+  },
+  "results": {
+    "title": "Hasil akhirnya.",
+    "narration": "Seratus tiga puluh empat baris Swift, pembungkus tiga puluh baris, nol dependensi, lebih dari tiga puluh bahasa, dan satu uji ujung-ke-ujung yang membuktikan pipeline. Hasilnya adalah alat yang hendak Anda bangun — sudah dibangun dan didokumentasikan."
+  },
+  "outro": {
+    "title": "Ambil daftar periksanya.",
+    "narration": "Kode, dokumen arsitektur, penjelas baris demi baris, dan komprominya semuanya publik di bawah lisensi MIT. Tautan di deskripsi."
+  }
+}

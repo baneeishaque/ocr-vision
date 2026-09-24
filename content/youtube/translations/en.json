@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Your Mac already has an OCR engine.",
+    "narration": "macOS has shipped a high-quality OCR engine since 2019 — the Vision framework. Almost nobody uses it from the command line. This tool is the missing CLI: one hundred and thirty-four lines of Swift, zero dependencies, no network, no API keys."
+  },
+  "architecture": {
+    "title": "One request, one pipeline.",
+    "narration": "An image is loaded through AppKit, converted to a CGImage, and handed to one Vision request. Recognition itself is a single API call with three properties: the recognition level, the language-correction switch, and the ordered language list."
+  },
+  "reading-order": {
+    "title": "Reading order, reconstructed.",
+    "narration": "Vision says nothing about the order of the text it returns. So the tool sorts observations by vertical midpoint, groups fragments whose midpoints overlap into one line, and sorts each line left to right. One empirical constant — sixty percent — does the work."
+  },
+  "languages": {
+    "title": "Thirty-plus languages, one flag.",
+    "narration": "The language list is an ordered preference: Vision tries the first language, then the next. Put the dominant language first, and pass any combination — English, Hindi, Arabic, German — in a single flag."
+  },
+  "flags": {
+    "title": "Fast, raw, or both.",
+    "narration": "Two switches change everything. Fast trades accuracy for latency on bulk passes. Raw disables language correction, because correcting a variable name into an English word is data loss. The output flag writes to a file instead of stdout."
+  },
+  "privacy": {
+    "title": "Nothing leaves the machine.",
+    "narration": "The image is opened by the operating system, recognized by an operating-system framework, and printed to stdout. No account, no key, no upload, no per-page cost. For a screenshot of a production system, that property is the point."
+  },
+  "wrapper": {
+    "title": "Compiles itself on first run.",
+    "narration": "A Swift file you have to remember how to compile is not a tool. The thirty-line shell wrapper compiles the source once, caches the binary, recompiles when the source changes, and passes every argument through untouched."
+  },
+  "code": {
+    "title": "The whole engine is 134 lines.",
+    "narration": "Argument parsing, image loading, the Vision request, reading-order reconstruction, and output — all in one file of one hundred and thirty-four lines, documented line by line in the repository's explainer."
+  },
+  "testing": {
+    "title": "Prove it with a generated fixture.",
+    "narration": "The smoke test generates its fixture image instead of committing one, runs the real wrapper — compile path included — and diffs the recognized text against the expected lines. The same test asserts the CLI contracts, and it all runs in CI on a stock macOS runner."
+  },
+  "tradeoffs": {
+    "title": "The trade-offs, honestly.",
+    "narration": "It is macOS-only by design. The reading order assumes horizontal text lines. There is no preprocessing, so degraded scans stay hard. Cloud APIs still win on the hardest documents. And the output is plain text, not boxes and confidences. Every limitation is written down."
+  },
+  "results": {
+    "title": "What it adds up to.",
+    "narration": "One hundred and thirty-four lines of Swift, a thirty-line wrapper, zero dependencies, thirty-plus languages, and one end-to-end test that proves the pipeline. The result is the tool you were about to build — already built and documented."
+  },
+  "outro": {
+    "title": "Steal the checklist.",
+    "narration": "The code, the architecture docs, the line-by-line explainer, and the trade-offs are all public under the MIT license. Link in the description."
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Votre Mac possède déjà un moteur OCR.",
+    "narration": "macOS embarque depuis 2019 un moteur OCR de haute qualité : le framework Vision. Presque personne ne l'utilise en ligne de commande. Cet outil est la CLI manquante : cent trente-quatre lignes de Swift, zéro dépendance, aucun réseau, aucune clé API."
+  },
+  "architecture": {
+    "title": "Une requête, un pipeline.",
+    "narration": "L'image est chargée via AppKit, convertie en CGImage et confiée à une requête Vision. La reconnaissance elle-même est un seul appel API avec trois propriétés : le niveau de reconnaissance, l'interrupteur de correction linguistique et la liste ordonnée des langues."
+  },
+  "reading-order": {
+    "title": "Ordre de lecture, reconstruit.",
+    "narration": "Vision ne dit rien de l'ordre du texte renvoyé. L'outil trie donc les observations par milieu vertical, regroupe les fragments d'une même ligne et trie chaque ligne de gauche à droite. Une constante empirique — soixante pour cent — fait le travail."
+  },
+  "languages": {
+    "title": "Plus de trente langues, un seul drapeau.",
+    "narration": "La liste des langues est une préférence ordonnée : Vision essaie d'abord la première langue, puis la suivante. Placez la langue dominante en premier et passez n'importe quelle combinaison dans un seul drapeau — anglais, hindi, arabe, allemand."
+  },
+  "flags": {
+    "title": "Rapide, brut, ou les deux.",
+    "narration": "Deux interrupteurs changent tout. Rapide échange la précision contre la latence lors des traitements en masse. Brut désactive la correction linguistique, car corriger un nom de variable en mot anglais, c'est perdre des données. Le drapeau de sortie écrit dans un fichier plutôt que sur stdout."
+  },
+  "privacy": {
+    "title": "Rien ne quitte la machine.",
+    "narration": "Le système d'exploitation ouvre l'image, un framework du système la reconnaît, et le résultat s'affiche sur stdout. Pas de compte, pas de clé, pas d'envoi, pas de coût par page. Pour une capture d'un système de production, c'est précisément l'argument."
+  },
+  "wrapper": {
+    "title": "Il se compile au premier lancement.",
+    "narration": "Un fichier Swift dont il faut se rappeler la compilation n'est pas un outil. Le wrapper shell de trente lignes compile la source une fois, met le binaire en cache, recompile quand la source change et transmet chaque argument tel quel."
+  },
+  "code": {
+    "title": "Tout le moteur : 134 lignes.",
+    "narration": "Analyse des arguments, chargement de l'image, requête Vision, reconstruction de l'ordre de lecture et sortie — le tout dans un fichier de cent trente-quatre lignes, documenté ligne par ligne dans l'explicateur du dépôt."
+  },
+  "testing": {
+    "title": "Prouvez-le avec une fixture générée.",
+    "narration": "Le test de fumée génère lui-même son image de test au lieu d'en versionner une, exécute le vrai wrapper — compilation comprise — et compare le texte reconnu aux lignes attendues. Le même test vérifie les contrats de la CLI ; tout tourne en CI sur un runner macOS."
+  },
+  "tradeoffs": {
+    "title": "Les compromis, honnêtement.",
+    "narration": "C'est macOS uniquement, par choix. L'ordre de lecture suppose des lignes horizontales. Pas de prétraitement, donc les scans dégradés restent difficiles. Les API cloud gardent l'avantage sur les documents les plus durs. Et la sortie est du texte brut, pas des boîtes et des scores. Chaque limite est écrite."
+  },
+  "results": {
+    "title": "Le bilan.",
+    "narration": "Cent trente-quatre lignes de Swift, un wrapper de trente, zéro dépendance, plus de trente langues et un test de bout en bout qui prouve le pipeline. Le résultat est l'outil que vous alliez construire — construit et documenté."
+  },
+  "outro": {
+    "title": "Volez la checklist.",
+    "narration": "Le code, la documentation d'architecture, l'explicateur ligne par ligne et les compromis sont publics sous licence MIT. Lien dans la description."
+  }
+}

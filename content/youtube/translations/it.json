@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Il tuo Mac ha già un motore OCR.",
+    "narration": "macOS include dal 2019 un motore OCR di alta qualità: il framework Vision. Quasi nessuno lo usa dalla riga di comando. Questo strumento è la CLI mancante: centotrentaquattro righe di Swift, zero dipendenze, niente rete, nessuna chiave API."
+  },
+  "architecture": {
+    "title": "Una richiesta, una pipeline.",
+    "narration": "L'immagine viene caricata tramite AppKit, convertita in CGImage e affidata a una richiesta Vision. Il riconoscimento stesso è una singola chiamata API con tre proprietà: il livello di riconoscimento, l'interruttore di correzione linguistica e l'elenco ordinato delle lingue."
+  },
+  "reading-order": {
+    "title": "Ordine di lettura, ricostruito.",
+    "narration": "Vision non dice nulla sull'ordine del testo restituito. Così lo strumento ordina le osservazioni per punto medio verticale, raggruppa i frammenti della stessa riga e ordina ogni riga da sinistra a destra. Una costante empirica — sessanta per cento — fa il lavoro."
+  },
+  "languages": {
+    "title": "Oltre trenta lingue, un flag.",
+    "narration": "L'elenco delle lingue è una preferenza ordinata: Vision prova prima la prima lingua, poi la successiva. Metti la lingua dominante per prima e passa qualsiasi combinazione in un solo flag: inglese, hindi, arabo, tedesco."
+  },
+  "flags": {
+    "title": "Veloce, grezzo, o entrambi.",
+    "narration": "Due interruttori cambiano tutto. Veloce scambia precisione con latenza nelle elaborazioni in massa. Grezzo disattiva la correzione linguistica, perché correggere il nome di una variabile in una parola inglese è perdita di dati. Il flag di output scrive su file invece che su stdout."
+  },
+  "privacy": {
+    "title": "Niente esce dalla macchina.",
+    "narration": "Il sistema operativo apre l'immagine, un framework di sistema la riconosce e il risultato viene stampato su stdout. Nessun account, nessuna chiave, nessun caricamento, nessun costo per pagina. Per uno screenshot di un sistema in produzione, questa proprietà è il punto."
+  },
+  "wrapper": {
+    "title": "Si compila da solo al primo avvio.",
+    "narration": "Un file Swift di cui ricordare la compilazione non è uno strumento. Il wrapper shell di trenta righe compila la fonte una volta, memorizza il binario, ricompila quando la fonte cambia e passa ogni argomento invariato."
+  },
+  "code": {
+    "title": "L'intero motore: 134 righe.",
+    "narration": "Analisi degli argomenti, caricamento dell'immagine, la richiesta Vision, ricostruzione dell'ordine di lettura e output — tutto in un file di centotrentaquattro righe, documentato riga per riga nell'explainer del repository."
+  },
+  "testing": {
+    "title": "Dimostralo con un fixture generato.",
+    "narration": "Lo smoke test genera da sé l'immagine di prova invece di versionarne una, esegue il wrapper reale — incluso il percorso di compilazione — e confronta il testo riconosciuto con le righe attese. Lo stesso test verifica i contratti della CLI; tutto gira in CI su un runner macOS."
+  },
+  "tradeoffs": {
+    "title": "I compromessi, onestamente.",
+    "narration": "È solo per macOS, per scelta. L'ordine di lettura presuppone righe orizzontali. Non c'è pre-elaborazione, quindi le scansioni degradate restano difficili. Le API cloud vincono ancora sui documenti più difficili. E l'output è testo semplice, non box e confidenze. Ogni limite è documentato."
+  },
+  "results": {
+    "title": "Il bilancio.",
+    "narration": "Centotrentaquattro righe di Swift, un wrapper di trenta, zero dipendenze, oltre trenta lingue e un test end-to-end che dimostra la pipeline. Il risultato è lo strumento che stavi per costruire — costruito e documentato."
+  },
+  "outro": {
+    "title": "Rubate la checklist.",
+    "narration": "Il codice, la documentazione di architettura, l'explainer riga per riga e i compromessi sono pubblici con licenza MIT. Link nella descrizione."
+  }
+}

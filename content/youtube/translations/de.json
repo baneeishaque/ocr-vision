@@ -1,0 +1,50 @@
+{
+  "intro": {
+    "title": "Dein Mac hat bereits eine OCR-Engine.",
+    "narration": "macOS liefert seit 2019 eine hochwertige OCR-Engine mit — das Vision-Framework. Kaum jemand nutzt sie über die Kommandozeile. Dieses Tool ist die fehlende CLI: einhundertvierunddreißig Zeilen Swift, keine Abhängigkeiten, kein Netzwerk, keine API-Schlüssel."
+  },
+  "architecture": {
+    "title": "Eine Anfrage, eine Pipeline.",
+    "narration": "Das Bild wird über AppKit geladen, in ein CGImage umgewandelt und an eine Vision-Anfrage übergeben. Die Erkennung selbst ist ein einziger API-Aufruf mit drei Eigenschaften: Erkennungsstufe, Sprachkorrektur-Schalter und die geordnete Sprachliste."
+  },
+  "reading-order": {
+    "title": "Lesereihenfolge, rekonstruiert.",
+    "narration": "Vision sagt nichts über die Reihenfolge des zurückgegebenen Textes. Deshalb sortiert das Tool Beobachtungen nach vertikalem Mittelpunkt, gruppiert Fragmente derselben Zeile und sortiert jede Zeile von links nach rechts. Eine empirische Konstante — sechzig Prozent — erledigt die Arbeit."
+  },
+  "languages": {
+    "title": "Über dreißig Sprachen, ein Flag.",
+    "narration": "Die Sprachliste ist eine geordnete Präferenz: Vision versucht zuerst die erste Sprache, dann die nächste. Die dominante Sprache zuerst nennen und jede Kombination in einem Flag übergeben — Englisch, Hindi, Arabisch, Deutsch."
+  },
+  "flags": {
+    "title": "Schnell, roh oder beides.",
+    "narration": "Zwei Schalter ändern alles. Schnell tauscht Genauigkeit gegen Latenz bei Massendurchläufen. Roh schaltet die Sprachkorrektur ab, denn einen Variablennamen in ein englisches Wort zu korrigieren ist Datenverlust. Das Ausgabe-Flag schreibt in eine Datei statt auf stdout."
+  },
+  "privacy": {
+    "title": "Nichts verlässt den Rechner.",
+    "narration": "Das Bild wird vom Betriebssystem geöffnet, von einem Betriebssystem-Framework erkannt und auf stdout ausgegeben. Kein Konto, kein Schlüssel, kein Upload, keine Kosten pro Seite. Bei einem Screenshot eines Produktivsystems ist genau das der Punkt."
+  },
+  "wrapper": {
+    "title": "Kompiliert sich beim ersten Lauf selbst.",
+    "narration": "Eine Swift-Datei, deren Kompilierung man sich merken muss, ist kein Werkzeug. Der dreißig Zeilen lange Shell-Wrapper kompiliert die Quelle einmal, cached das Binary, kompiliert bei Änderungen neu und reicht jedes Argument unverändert durch."
+  },
+  "code": {
+    "title": "Die ganze Engine: 134 Zeilen.",
+    "narration": "Argumentanalyse, Bildladen, die Vision-Anfrage, Rekonstruktion der Lesereihenfolge und Ausgabe — alles in einer Datei mit einhundertvierunddreißig Zeilen, im Explainer des Repositories Zeile für Zeile dokumentiert."
+  },
+  "testing": {
+    "title": "Beweis mit generiertem Fixture.",
+    "narration": "Der Smoke-Test erzeugt sein Testbild selbst statt eines einzufügen, führt den echten Wrapper aus — inklusive Kompilierpfad — und vergleicht den erkannten Text mit den erwarteten Zeilen. Derselbe Test prüft die CLI-Verträge; alles läuft in CI auf einem macOS-Runner."
+  },
+  "tradeoffs": {
+    "title": "Die Kompromisse, ehrlich.",
+    "narration": "Es ist bewusst nur für macOS. Die Lesereihenfolge setzt horizontale Zeilen voraus. Es gibt keine Vorverarbeitung, also bleiben schlechte Scans schwierig. Cloud-APIs gewinnen bei den härtesten Dokumenten. Und die Ausgabe ist reiner Text, keine Boxen und Konfidenzen. Jede Einschränkung ist dokumentiert."
+  },
+  "results": {
+    "title": "Was am Ende steht.",
+    "narration": "Einhundertvierunddreißig Zeilen Swift, ein Dreißig-Zeilen-Wrapper, null Abhängigkeiten, über dreißig Sprachen und ein End-to-End-Test, der die Pipeline beweist. Das Ergebnis ist das Tool, das du gerade bauen wolltest — gebaut und dokumentiert."
+  },
+  "outro": {
+    "title": "Nimm die Checkliste.",
+    "narration": "Der Code, die Architektur-Dokumente, der Zeile-für-Zeile-Explainer und die Kompromisse sind alle öffentlich unter MIT-Lizenz. Link in der Beschreibung."
+  }
+}
