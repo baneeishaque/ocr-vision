@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:20.549
+macOS menyertakan mesin OCR berkualitas sejak 2019 — framework Vision. Hampir tidak ada yang memakainya dari baris perintah. Alat ini adalah CLI yang hilang: seratus tiga puluh empat baris Swift, tanpa dependensi, tanpa jaringan, tanpa kunci API.
+
+00:00:22.349 --> 00:00:40.261
+Gambar dimuat lewat AppKit, dikonversi ke CGImage, dan diserahkan ke satu permintaan Vision. Pengenalan itu sendiri adalah satu panggilan API dengan tiga properti: tingkat pengenalan, sakelar koreksi bahasa, dan daftar bahasa yang terurut.
+
+00:00:42.061 --> 00:01:02.416
+Vision tidak menjamin urutan teks yang dikembalikan. Jadi alat ini mengurutkan observasi berdasarkan titik tengah vertikal, menggabungkan fragmen dalam satu baris, dan mengurutkan tiap baris dari kiri ke kanan. Satu konstanta empiris — enam puluh persen — melakukan pekerjaannya.
+
+00:01:04.216 --> 00:01:19.132
+Daftar bahasa adalah preferensi terurut: Vision mencoba bahasa pertama, lalu berikutnya. Taruh bahasa dominan di depan dan kirim kombinasi apa pun dalam satu flag — Inggris, Hindi, Arab, Jerman.
+
+00:01:20.932 --> 00:01:39.587
+Dua sakelar mengubah segalanya. Cepat menukar akurasi dengan latensi untuk pemrosesan massal. Mentah menonaktifkan koreksi bahasa, karena mengoreksi nama variabel menjadi kata Inggris adalah kehilangan data. Flag keluaran menulis ke berkas alih-alih stdout.
+
+00:01:41.387 --> 00:01:58.692
+Sistem operasi membuka gambar, framework sistem mengenalinya, dan hasilnya dicetak ke stdout. Tanpa akun, tanpa kunci, tanpa unggahan, tanpa biaya per halaman. Untuk tangkapan layar sistem produksi, sifat itulah intinya.
+
+00:02:00.492 --> 00:02:17.180
+Berkas Swift yang cara mengompilasinya harus diingat bukanlah alat. Pembungkus shell tiga puluh baris mengompilasi sumber sekali, menyimpan biner di cache, mengompilasi ulang saat sumber berubah, dan meneruskan setiap argumen apa adanya.
+
+00:02:18.980 --> 00:02:35.043
+Parsing argumen, pemuatan gambar, permintaan Vision, rekonstruksi urutan baca, dan keluaran — semuanya dalam satu berkas seratus tiga puluh empat baris, didokumentasikan baris demi baris di penjelas repositori.
+
+00:02:36.843 --> 00:02:56.629
+Uji asap membuat sendiri gambar ujinya alih-alih menyimpannya di repo, menjalankan pembungkus asli — termasuk jalur kompilasi — dan membandingkan teks yang dikenali dengan baris yang diharapkan. Uji yang sama memeriksa kontrak CLI; semuanya berjalan di CI pada runner macOS.
+
+00:02:58.429 --> 00:03:18.853
+Hanya untuk macOS, memang. Urutan baca mengasumsikan baris horizontal. Tidak ada prapemrosesan, jadi pemindaian buruk tetap sulit. API cloud masih unggul pada dokumen tersulit. Dan keluarannya teks biasa, bukan kotak dan skor keyakinan. Setiap batasan tertulis.
+
+00:03:20.653 --> 00:03:38.860
+Seratus tiga puluh empat baris Swift, pembungkus tiga puluh baris, nol dependensi, lebih dari tiga puluh bahasa, dan satu uji ujung-ke-ujung yang membuktikan pipeline. Hasilnya adalah alat yang hendak Anda bangun — sudah dibangun dan didokumentasikan.
+
+00:03:40.660 --> 00:03:50.317
+Kode, dokumen arsitektur, penjelas baris demi baris, dan komprominya semuanya publik di bawah lisensi MIT. Tautan di deskripsi.

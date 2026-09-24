@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:18,927
+macOS liefert seit 2019 eine hochwertige OCR-Engine mit — das Vision-Framework. Kaum jemand nutzt sie über die Kommandozeile. Dieses Tool ist die fehlende CLI: einhundertvierunddreißig Zeilen Swift, keine Abhängigkeiten, kein Netzwerk, keine API-Schlüssel.
+
+2
+00:00:20,727 --> 00:00:36,826
+Das Bild wird über AppKit geladen, in ein CGImage umgewandelt und an eine Vision-Anfrage übergeben. Die Erkennung selbst ist ein einziger API-Aufruf mit drei Eigenschaften: Erkennungsstufe, Sprachkorrektur-Schalter und die geordnete Sprachliste.
+
+3
+00:00:38,626 --> 00:00:56,599
+Vision sagt nichts über die Reihenfolge des zurückgegebenen Textes. Deshalb sortiert das Tool Beobachtungen nach vertikalem Mittelpunkt, gruppiert Fragmente derselben Zeile und sortiert jede Zeile von links nach rechts. Eine empirische Konstante — sechzig Prozent — erledigt die Arbeit.
+
+4
+00:00:58,399 --> 00:01:12,956
+Die Sprachliste ist eine geordnete Präferenz: Vision versucht zuerst die erste Sprache, dann die nächste. Die dominante Sprache zuerst nennen und jede Kombination in einem Flag übergeben — Englisch, Hindi, Arabisch, Deutsch.
+
+5
+00:01:14,756 --> 00:01:31,556
+Zwei Schalter ändern alles. Schnell tauscht Genauigkeit gegen Latenz bei Massendurchläufen. Roh schaltet die Sprachkorrektur ab, denn einen Variablennamen in ein englisches Wort zu korrigieren ist Datenverlust. Das Ausgabe-Flag schreibt in eine Datei statt auf stdout.
+
+6
+00:01:33,356 --> 00:01:49,700
+Das Bild wird vom Betriebssystem geöffnet, von einem Betriebssystem-Framework erkannt und auf stdout ausgegeben. Kein Konto, kein Schlüssel, kein Upload, keine Kosten pro Seite. Bei einem Screenshot eines Produktivsystems ist genau das der Punkt.
+
+7
+00:01:51,500 --> 00:02:06,478
+Eine Swift-Datei, deren Kompilierung man sich merken muss, ist kein Werkzeug. Der dreißig Zeilen lange Shell-Wrapper kompiliert die Quelle einmal, cached das Binary, kompiliert bei Änderungen neu und reicht jedes Argument unverändert durch.
+
+8
+00:02:08,278 --> 00:02:23,279
+Argumentanalyse, Bildladen, die Vision-Anfrage, Rekonstruktion der Lesereihenfolge und Ausgabe — alles in einer Datei mit einhundertvierunddreißig Zeilen, im Explainer des Repositories Zeile für Zeile dokumentiert.
+
+9
+00:02:25,079 --> 00:02:42,105
+Der Smoke-Test erzeugt sein Testbild selbst statt eines einzufügen, führt den echten Wrapper aus — inklusive Kompilierpfad — und vergleicht den erkannten Text mit den erwarteten Zeilen. Derselbe Test prüft die CLI-Verträge; alles läuft in CI auf einem macOS-Runner.
+
+10
+00:02:43,905 --> 00:03:04,474
+Es ist bewusst nur für macOS. Die Lesereihenfolge setzt horizontale Zeilen voraus. Es gibt keine Vorverarbeitung, also bleiben schlechte Scans schwierig. Cloud-APIs gewinnen bei den härtesten Dokumenten. Und die Ausgabe ist reiner Text, keine Boxen und Konfidenzen. Jede Einschränkung ist dokumentiert.
+
+11
+00:03:06,274 --> 00:03:22,262
+Einhundertvierunddreißig Zeilen Swift, ein Dreißig-Zeilen-Wrapper, null Abhängigkeiten, über dreißig Sprachen und ein End-to-End-Test, der die Pipeline beweist. Das Ergebnis ist das Tool, das du gerade bauen wolltest — gebaut und dokumentiert.
+
+12
+00:03:24,062 --> 00:03:34,218
+Der Code, die Architektur-Dokumente, der Zeile-für-Zeile-Explainer und die Kompromisse sind alle öffentlich unter MIT-Lizenz. Link in der Beschreibung.

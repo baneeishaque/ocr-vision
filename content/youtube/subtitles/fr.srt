@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:17,452
+macOS embarque depuis 2019 un moteur OCR de haute qualité : le framework Vision. Presque personne ne l'utilise en ligne de commande. Cet outil est la CLI manquante : cent trente-quatre lignes de Swift, zéro dépendance, aucun réseau, aucune clé API.
+
+2
+00:00:19,252 --> 00:00:34,607
+L'image est chargée via AppKit, convertie en CGImage et confiée à une requête Vision. La reconnaissance elle-même est un seul appel API avec trois propriétés : le niveau de reconnaissance, l'interrupteur de correction linguistique et la liste ordonnée des langues.
+
+3
+00:00:36,407 --> 00:00:51,117
+Vision ne dit rien de l'ordre du texte renvoyé. L'outil trie donc les observations par milieu vertical, regroupe les fragments d'une même ligne et trie chaque ligne de gauche à droite. Une constante empirique — soixante pour cent — fait le travail.
+
+4
+00:00:52,917 --> 00:01:07,113
+La liste des langues est une préférence ordonnée : Vision essaie d'abord la première langue, puis la suivante. Placez la langue dominante en premier et passez n'importe quelle combinaison dans un seul drapeau — anglais, hindi, arabe, allemand.
+
+5
+00:01:08,913 --> 00:01:25,431
+Deux interrupteurs changent tout. Rapide échange la précision contre la latence lors des traitements en masse. Brut désactive la correction linguistique, car corriger un nom de variable en mot anglais, c'est perdre des données. Le drapeau de sortie écrit dans un fichier plutôt que sur stdout.
+
+6
+00:01:27,231 --> 00:01:43,153
+Le système d'exploitation ouvre l'image, un framework du système la reconnaît, et le résultat s'affiche sur stdout. Pas de compte, pas de clé, pas d'envoi, pas de coût par page. Pour une capture d'un système de production, c'est précisément l'argument.
+
+7
+00:01:44,953 --> 00:01:57,977
+Un fichier Swift dont il faut se rappeler la compilation n'est pas un outil. Le wrapper shell de trente lignes compile la source une fois, met le binaire en cache, recompile quand la source change et transmet chaque argument tel quel.
+
+8
+00:01:59,777 --> 00:02:13,080
+Analyse des arguments, chargement de l'image, requête Vision, reconstruction de l'ordre de lecture et sortie — le tout dans un fichier de cent trente-quatre lignes, documenté ligne par ligne dans l'explicateur du dépôt.
+
+9
+00:02:14,880 --> 00:02:31,268
+Le test de fumée génère lui-même son image de test au lieu d'en versionner une, exécute le vrai wrapper — compilation comprise — et compare le texte reconnu aux lignes attendues. Le même test vérifie les contrats de la CLI ; tout tourne en CI sur un runner macOS.
+
+10
+00:02:33,068 --> 00:02:51,533
+C'est macOS uniquement, par choix. L'ordre de lecture suppose des lignes horizontales. Pas de prétraitement, donc les scans dégradés restent difficiles. Les API cloud gardent l'avantage sur les documents les plus durs. Et la sortie est du texte brut, pas des boîtes et des scores. Chaque limite est écrite.
+
+11
+00:02:53,333 --> 00:03:06,622
+Cent trente-quatre lignes de Swift, un wrapper de trente, zéro dépendance, plus de trente langues et un test de bout en bout qui prouve le pipeline. Le résultat est l'outil que vous alliez construire — construit et documenté.
+
+12
+00:03:08,422 --> 00:03:17,603
+Le code, la documentation d'architecture, l'explicateur ligne par ligne et les compromis sont publics sous licence MIT. Lien dans la description.

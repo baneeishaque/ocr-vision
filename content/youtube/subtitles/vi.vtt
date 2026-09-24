@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:19.341
+macOS đã trang bị một engine OCR chất lượng cao từ năm 2019 — framework Vision. Hầu như không ai dùng nó từ dòng lệnh. Công cụ này là chiếc CLI còn thiếu: một trăm ba mươi bốn dòng Swift, không phụ thuộc, không mạng, không khóa API.
+
+00:00:21.141 --> 00:00:36.756
+Ảnh được tải qua AppKit, chuyển thành CGImage và giao cho một yêu cầu Vision. Bản thân việc nhận dạng là một lời gọi API duy nhất với ba thuộc tính: mức nhận dạng, công tắc sửa ngôn ngữ và danh sách ngôn ngữ có thứ tự.
+
+00:00:38.556 --> 00:00:54.572
+Vision không nói gì về thứ tự văn bản trả về. Nên công cụ sắp xếp các quan sát theo trung điểm dọc, nhóm các mảnh trên cùng một dòng và sắp xếp từng dòng từ trái sang phải. Một hằng số thực nghiệm — sáu mươi phần trăm — làm nên việc đó.
+
+00:00:56.372 --> 00:01:11.831
+Danh sách ngôn ngữ là một thứ tự ưu tiên: Vision thử ngôn ngữ đầu tiên, rồi đến ngôn ngữ kế tiếp. Đặt ngôn ngữ chính lên trước và truyền bất kỳ tổ hợp nào trong một cờ — tiếng Anh, tiếng Hindi, tiếng Ả Rập, tiếng Đức.
+
+00:01:13.631 --> 00:01:28.464
+Hai công tắc thay đổi mọi thứ. Nhanh đánh đổi độ chính xác lấy độ trễ khi xử lý hàng loạt. Thô tắt sửa ngôn ngữ, vì sửa tên biến thành từ tiếng Anh là mất dữ liệu. Cờ đầu ra ghi vào tệp thay vì stdout.
+
+00:01:30.264 --> 00:01:47.244
+Hệ điều hành mở ảnh, framework của hệ điều hành nhận dạng, và kết quả in ra stdout. Không tài khoản, không khóa, không tải lên, không phí theo trang. Với ảnh chụp màn hình của hệ thống sản xuất, chính đặc tính đó là điểm mấu chốt.
+
+00:01:49.044 --> 00:02:03.481
+Một tệp Swift mà bạn phải nhớ cách biên dịch không phải là công cụ. Trình bao shell ba mươi dòng biên dịch mã nguồn một lần, lưu bộ nhị phân vào bộ đệm, biên dịch lại khi mã nguồn thay đổi và truyền nguyên vẹn mọi đối số.
+
+00:02:05.281 --> 00:02:18.170
+Phân tích đối số, tải ảnh, yêu cầu Vision, tái tạo thứ tự đọc và xuất kết quả — tất cả trong một tệp một trăm ba mươi bốn dòng, được giải thích từng dòng trong tài liệu của kho mã.
+
+00:02:19.970 --> 00:02:37.403
+Bài kiểm tra khói tự sinh ảnh kiểm thử thay vì lưu một ảnh vào kho, chạy trình bao thật — gồm cả bước biên dịch — và so văn bản nhận dạng với các dòng mong đợi. Cùng bài kiểm tra cũng xác nhận các giao kèo CLI; tất cả chạy trong CI trên runner macOS.
+
+00:02:39.203 --> 00:02:59.222
+Công cụ chỉ dành cho macOS, có chủ đích. Thứ tự đọc giả định các dòng ngang. Không có tiền xử lý, nên bản quét kém vẫn khó. API đám mây vẫn thắng ở những tài liệu khó nhất. Và đầu ra là văn bản thuần, không phải hộp và điểm tin cậy. Mọi giới hạn đều được ghi lại.
+
+00:03:01.022 --> 00:03:16.388
+Một trăm ba mươi bốn dòng Swift, trình bao ba mươi dòng, không phụ thuộc, hơn ba mươi ngôn ngữ và một bài kiểm tra đầu-cuối chứng minh toàn bộ pipeline. Kết quả chính là công cụ bạn định xây — đã xây xong và có tài liệu.
+
+00:03:18.188 --> 00:03:27.121
+Mã nguồn, tài liệu kiến trúc, phần giải thích từng dòng và các đánh đổi đều công khai theo giấy phép MIT. Liên kết ở phần mô tả.

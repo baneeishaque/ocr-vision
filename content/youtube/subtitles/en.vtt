@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:15.305
+macOS has shipped a high-quality OCR engine since 2019 — the Vision framework. Almost nobody uses it from the command line. This tool is the missing CLI: one hundred and thirty-four lines of Swift, zero dependencies, no network, no API keys.
+
+00:00:17.105 --> 00:00:29.957
+An image is loaded through AppKit, converted to a CGImage, and handed to one Vision request. Recognition itself is a single API call with three properties: the recognition level, the language-correction switch, and the ordered language list.
+
+00:00:31.757 --> 00:00:44.943
+Vision says nothing about the order of the text it returns. So the tool sorts observations by vertical midpoint, groups fragments whose midpoints overlap into one line, and sorts each line left to right. One empirical constant — sixty percent — does the work.
+
+00:00:46.743 --> 00:00:57.871
+The language list is an ordered preference: Vision tries the first language, then the next. Put the dominant language first, and pass any combination — English, Hindi, Arabic, German — in a single flag.
+
+00:00:59.671 --> 00:01:12.455
+Two switches change everything. Fast trades accuracy for latency on bulk passes. Raw disables language correction, because correcting a variable name into an English word is data loss. The output flag writes to a file instead of stdout.
+
+00:01:14.255 --> 00:01:27.427
+The image is opened by the operating system, recognized by an operating-system framework, and printed to stdout. No account, no key, no upload, no per-page cost. For a screenshot of a production system, that property is the point.
+
+00:01:29.227 --> 00:01:40.535
+A Swift file you have to remember how to compile is not a tool. The thirty-line shell wrapper compiles the source once, caches the binary, recompiles when the source changes, and passes every argument through untouched.
+
+00:01:42.335 --> 00:01:53.065
+Argument parsing, image loading, the Vision request, reading-order reconstruction, and output — all in one file of one hundred and thirty-four lines, documented line by line in the repository's explainer.
+
+00:01:54.865 --> 00:02:08.321
+The smoke test generates its fixture image instead of committing one, runs the real wrapper — compile path included — and diffs the recognized text against the expected lines. The same test asserts the CLI contracts, and it all runs in CI on a stock macOS runner.
+
+00:02:10.121 --> 00:02:26.168
+It is macOS-only by design. The reading order assumes horizontal text lines. There is no preprocessing, so degraded scans stay hard. Cloud APIs still win on the hardest documents. And the output is plain text, not boxes and confidences. Every limitation is written down.
+
+00:02:27.968 --> 00:02:40.073
+One hundred and thirty-four lines of Swift, a thirty-line wrapper, zero dependencies, thirty-plus languages, and one end-to-end test that proves the pipeline. The result is the tool you were about to build — already built and documented.
+
+00:02:41.873 --> 00:02:49.942
+The code, the architecture docs, the line-by-line explainer, and the trade-offs are all public under the MIT license. Link in the description.

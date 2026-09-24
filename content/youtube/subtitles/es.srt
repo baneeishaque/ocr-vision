@@ -1,0 +1,47 @@
+1
+00:00:00,400 --> 00:00:15,397
+macOS incluye desde 2019 un motor OCR de alta calidad: el framework Vision. Casi nadie lo usa desde la línea de comandos. Esta herramienta es la CLI que faltaba: ciento treinta y cuatro líneas de Swift, cero dependencias, sin red, sin claves de API.
+
+2
+00:00:17,197 --> 00:00:30,888
+La imagen se carga con AppKit, se convierte en CGImage y se entrega a una petición de Vision. El reconocimiento es una sola llamada a la API con tres propiedades: el nivel de reconocimiento, el interruptor de corrección de idioma y la lista ordenada de idiomas.
+
+3
+00:00:32,688 --> 00:00:46,787
+Vision no dice nada sobre el orden del texto que devuelve. Así que la herramienta ordena las observaciones por punto medio vertical, agrupa los fragmentos de una misma línea y ordena cada línea de izquierda a derecha. Una constante empírica — sesenta por ciento — hace el trabajo.
+
+4
+00:00:48,587 --> 00:01:00,703
+La lista de idiomas es una preferencia ordenada: Vision intenta primero el primer idioma y luego el siguiente. Pon el idioma dominante primero y pasa cualquier combinación en una sola bandera: inglés, hindi, árabe, alemán.
+
+5
+00:01:02,503 --> 00:01:16,357
+Dos interruptores lo cambian todo. Rápido cambia precisión por latencia en pasadas masivas. Crudo desactiva la corrección de idioma, porque corregir el nombre de una variable a una palabra inglesa es perder datos. La bandera de salida escribe en un archivo en vez de stdout.
+
+6
+00:01:18,157 --> 00:01:32,178
+El sistema operativo abre la imagen, un framework del sistema la reconoce y el resultado se imprime en stdout. Sin cuenta, sin clave, sin subida, sin coste por página. Para una captura de un sistema en producción, esa propiedad es el objetivo.
+
+7
+00:01:33,978 --> 00:01:45,572
+Un archivo Swift cuya compilación hay que recordar no es una herramienta. El envoltorio de treinta líneas compila la fuente una vez, guarda el binario en caché, recompila cuando la fuente cambia y pasa cada argumento sin tocarlo.
+
+8
+00:01:47,372 --> 00:01:59,675
+Análisis de argumentos, carga de la imagen, la petición de Vision, reconstrucción del orden de lectura y salida: todo en un archivo de ciento treinta y cuatro líneas, documentado línea a línea en el explicador del repositorio.
+
+9
+00:02:01,475 --> 00:02:15,305
+La prueba de humo genera su propia imagen de prueba en vez de incluir una, ejecuta el envoltorio real —incluida la compilación— y compara el texto reconocido con las líneas esperadas. La misma prueba verifica los contratos de la CLI; todo corre en CI sobre un runner de macOS.
+
+10
+00:02:17,105 --> 00:02:33,584
+Es solo para macOS por diseño. El orden de lectura asume líneas horizontales. No hay preprocesado, así que los escaneos degradados siguen siendo difíciles. Las API en la nube aún ganan en los documentos más duros. Y la salida es texto plano, no cajas ni confianzas. Cada limitación está escrita.
+
+11
+00:02:35,384 --> 00:02:48,431
+Ciento treinta y cuatro líneas de Swift, un envoltorio de treinta, cero dependencias, más de treinta idiomas y una prueba de extremo a extremo que demuestra la tubería. El resultado es la herramienta que ibas a construir: construida y documentada.
+
+12
+00:02:50,231 --> 00:02:58,656
+El código, la documentación de arquitectura, el explicador línea a línea y los compromisos son públicos bajo licencia MIT. Enlace en la descripción.

@@ -1,0 +1,37 @@
+WEBVTT
+
+00:00:00.400 --> 00:00:18.276
+macOS 2019'dan beri yüksek kaliteli bir OCR motoru sunuyor: Vision çerçevesi. Neredeyse kimse onu komut satırından kullanmıyor. Bu araç eksik olan CLI: yüz otuz dört satır Swift, sıfır bağımlılık, ağ yok, API anahtarı yok.
+
+00:00:20.076 --> 00:00:34.502
+Görüntü AppKit ile yüklenir, CGImage'e dönüştürülür ve tek bir Vision isteğine verilir. Tanımanın kendisi üç özellikli tek bir API çağrısıdır: tanıma düzeyi, dil düzeltme anahtarı ve sıralı dil listesi.
+
+00:00:36.302 --> 00:00:54.051
+Vision döndürdüğü metnin sırası hakkında hiçbir şey söylemez. Bu yüzden araç gözlemleri dikey orta noktaya göre sıralar, aynı satırdaki parçaları gruplar ve her satırı soldan sağa sıralar. Tek bir deneysel sabit — yüzde altmış — işi yapar.
+
+00:00:55.851 --> 00:01:09.547
+Dil listesi sıralı bir tercihtir: Vision önce ilk dili, sonra sıradakini dener. Baskın dili başa koyun ve herhangi bir kombinasyonu tek bayrakla geçin — İngilizce, Hintçe, Arapça, Almanca.
+
+00:01:11.347 --> 00:01:28.980
+İki anahtar her şeyi değiştirir. Hızlı, toplu işlerde gecikme için doğruluktan feragat eder. Ham, dil düzeltmeyi kapatır; çünkü bir değişken adını İngilizce kelimeye düzeltmek veri kaybıdır. Çıktı bayrağı stdout yerine dosyaya yazar.
+
+00:01:30.780 --> 00:01:47.841
+Görüntüyü işletim sistemi açar, işletim sistemi çerçevesi tanır ve sonuç stdout'a yazılır. Hesap yok, anahtar yok, yükleme yok, sayfa başına ücret yok. Üretim sisteminin ekran görüntüsü için asıl mesele bu özelliktir.
+
+00:01:49.641 --> 00:02:05.695
+Nasıl derleneceğini hatırlamak zorunda olduğunuz bir Swift dosyası araç değildir. Otuz satırlık kabuk sarmalayıcı kaynağı bir kez derler, ikiliyi önbelleğe alır, kaynak değişince yeniden derler ve her argümanı olduğu gibi iletir.
+
+00:02:07.495 --> 00:02:20.867
+Argüman ayrıştırma, görüntü yükleme, Vision isteği, okuma sırasını yeniden kurma ve çıktı — hepsi yüz otuz dört satırlık tek bir dosyada; depodaki açıklamada satır satır belgelenmiş.
+
+00:02:22.667 --> 00:02:41.725
+Duman testi test görüntüsünü depoya koymak yerine kendisi üretir, gerçek sarmalayıcıyı — derleme yolu dahil — çalıştırır ve tanınan metni beklenen satırlarla karşılaştırır. Aynı test CLI sözleşmelerini de doğrular; hepsi macOS CI çalıştırıcısında koşar.
+
+00:02:43.525 --> 00:03:00.836
+Tasarım gereği yalnızca macOS. Okuma sırası yatay satırlar varsayar. Ön işleme yok, bu yüzden bozuk taramalar zor kalır. Bulut API'leri en zor belgelerde hâlâ önde. Çıktı düz metin; kutular ve güven puanları değil. Her sınırlama yazılı.
+
+00:03:02.636 --> 00:03:17.607
+Yüz otuz dört satır Swift, otuz satırlık sarmalayıcı, sıfır bağımlılık, otuzdan fazla dil ve işlem hattını kanıtlayan uçtan uca bir test. Sonuç, tam da kuracağınız araç — kurulmuş ve belgelenmiş.
+
+00:03:19.407 --> 00:03:27.506
+Kod, mimari belgeleri, satır satır açıklama ve ödünleşimler MIT lisansıyla açık. Bağlantı açıklamada.
