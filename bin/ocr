@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#
+# ocr — run OCR on an image on macOS via the Vision framework.
+# Compiles the Swift helper (ocr-vision.swift) on first use, then caches it.
+#
+# Usage:  ocr [options] <image>      (options are passed to ocr-vision.swift)
+#         ocr --help
+#
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SRC="$DIR/ocr-vision.swift"
+BIN="$DIR/ocr-vision"
+
+if [[ ! -f "$SRC" ]]; then
+    echo "ocr: missing $SRC" >&2
+    exit 1
+fi
+
+if [[ ! -x "$BIN" || "$SRC" -nt "$BIN" ]]; then
+    if ! xcrun --find swiftc >/dev/null 2>&1; then
+        echo "ocr: swiftc not found — install Xcode Command Line Tools: xcode-select --install" >&2
+        echo "ocr: alternative: brew install tesseract && tesseract IMAGE stdout" >&2
+        exit 1
+    fi
+    echo "ocr: compiling Vision helper (first run only)..." >&2
+    xcrun swiftc -O "$SRC" -o "$BIN"
+fi
+
+exec "$BIN" "$@"
